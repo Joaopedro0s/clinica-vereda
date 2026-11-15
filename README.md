@@ -11,7 +11,7 @@ Landing page de uma clínica odontológica **fictícia**, feita com React e Next
 - Sobre a clínica e diferenciais do atendimento
 - Serviços: odontologia geral, ortodontia, clareamento, harmonização do sorriso, implantes, prótese e odontopediatria
 - Equipe, com especialidade, CRO e biografia
-- Depoimentos com avaliação em estrelas
+- Depoimentos com avaliação em estrelas e média calculada a partir deles
 - Perguntas frequentes
 - Formulário de agendamento com validação
 - Localização, horários e contatos
@@ -45,6 +45,8 @@ app/
   layout.js              metatags, fonte, dados estruturados e aviso de demonstração
   page.js                a landing page inteira, seção por seção
   AgendamentoForm.js     formulário (componente de cliente)
+  Acordeao.js            item expansível acessível (serviços e FAQ)
+  icon.svg               ícone da aba (o símbolo da marca)
   globals.css            todos os estilos
   api/agendamento/       rota que recebe o formulário
   privacidade/           política de privacidade
@@ -52,10 +54,10 @@ lib/
   site.mjs               TODOS os dados da clínica
   validar.mjs            validação usada no navegador e no servidor
   validar.test.mjs       testes da validação
-public/fotos/            fotos em três tamanhos (500, 960 e 1280 px)
+public/fotos/            fotos em WebP (500, 960 e 1280 px; retratos em 500 e 960 px)
 ```
 
-Não há biblioteca de UI nem de CSS: só Next.js, React e CSS puro.
+Não há biblioteca de UI nem de CSS: só Next.js, React, CSS puro e os ícones do `lucide-react`.
 
 ## Como personalizar
 
@@ -63,11 +65,11 @@ Não há biblioteca de UI nem de CSS: só Next.js, React e CSS puro.
 
 **Textos de serviços, diferenciais e FAQ.** Estão no topo de [`app/page.js`](app/page.js).
 
-**Cores.** São variáveis no início de [`app/globals.css`](app/globals.css) (`--brand`, `--verde`, `--ink` etc.).
+**Cores e fontes.** São variáveis no início de [`app/globals.css`](app/globals.css): `--brand` (azul principal), `--quente` (destaque, para usar com moderação), `--areia` e `--tint` (fundos de seção). O corpo usa Figtree e os títulos usam Fraunces, carregadas em `app/layout.js`.
 
-**Fotos.** Salve cada foto em `public/fotos` nos três tamanhos, seguindo o padrão `photo-<id>-500.webp`, `photo-<id>-960.webp` e `photo-<id>.webp`, e troque o `id` no componente `<Foto>` em `app/page.js`. Ao trocar todas, remova a linha de créditos do rodapé.
+**Fotos.** Salve cada foto em `public/fotos` nos três tamanhos, seguindo o padrão `photo-<id>-500.webp`, `photo-<id>-960.webp` e `photo-<id>.webp`, e troque o `id` no componente `<Foto>` em `app/page.js`. Os retratos da equipe (proporção 4:5) usam só `photo-<id>-500.webp` e `photo-<id>.webp` (960 px), e o `id` de cada um fica no campo `foto` de `lib/site.mjs`. Ao trocar todas, remova a linha de créditos do rodapé.
 
-**Mapa.** Preencha `mapaEmbedUrl` em `lib/site.mjs` com o link de incorporação do Google Maps. Sem ele, a página mostra um mapa ilustrativo.
+**Mapa.** `mapaEmbedUrl` em `lib/site.mjs` guarda o endereço do mapa incorporado do Google Maps (sem chave de API). Troque o texto depois de `q=` pelo endereço real.
 
 ## Formulário de agendamento
 
@@ -105,5 +107,11 @@ No **GitHub Pages** ele não funciona sem adaptação, porque lá só rodam arqu
 Fotos do Wikimedia Commons, redimensionadas:
 
 - [Dentist adjusting braces to patient](https://commons.wikimedia.org/wiki/File:Dentist_adjusting_braces_to_patient.jpg) — Shixart1985, CC BY 2.0
-- [Dental office](https://commons.wikimedia.org/wiki/File:Dental_office.jpg) — Wikimedia Commons, CC BY-SA 4.0
 - [Child receives dental care in a clinic with a smiling dentist](https://commons.wikimedia.org/wiki/File:Child_receives_dental_care_in_a_clinic_with_a_smiling_dentist.jpg) — Shixart1985, CC BY 2.0
+
+Fotos do Unsplash (licença Unsplash), recortadas:
+
+- Sala e consultório: [@karibjorn](https://unsplash.com/photos/Fdku_oMrDvk), [@karibjorn](https://unsplash.com/photos/yJsMOVwazRU)
+- Retratos da equipe: [@beatrizmendez](https://unsplash.com/photos/_4xStiTXY1o), [@laurentyasiel](https://unsplash.com/photos/607-cXjrge4), [@novantino](https://unsplash.com/photos/ieofhSUlRAA), [@othmanelmarzak](https://unsplash.com/photos/P4VXFXKyOQM)
+
+As pessoas retratadas são modelos de banco de imagens e não têm relação com os profissionais fictícios da página.

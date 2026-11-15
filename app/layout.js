@@ -1,8 +1,10 @@
-import { Figtree } from "next/font/google";
+import { Figtree, Fraunces } from "next/font/google";
 import { site } from "../lib/site.mjs";
 import "./globals.css";
 
 const fonte = Figtree({ subsets: ["latin"], display: "swap" });
+// Serifada suave, só para títulos (via var(--font-titulo) no CSS).
+const fonteTitulo = Fraunces({ subsets: ["latin"], display: "swap", variable: "--font-titulo" });
 
 const titulo = `${site.nome} | Dentista em ${site.cidade} — convênios e particular`;
 const descricao = `Consultório odontológico em ${site.cidade}/${site.uf} para adultos e crianças: limpeza, restaurações, canal, aparelhos, implantes, próteses e odontopediatria. Atendimento por convênio e particular. Agende sua consulta.`;
@@ -45,7 +47,7 @@ const jsonLd = {
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
-      <body className={fonte.className}>
+      <body className={`${fonte.className} ${fonteTitulo.variable}`}>
         <a className="pular" href="#conteudo">Pular para o conteúdo</a>
         <p className="demo">Demonstração: clínica, profissionais, contatos e depoimentos desta página são fictícios.</p>
         {children}

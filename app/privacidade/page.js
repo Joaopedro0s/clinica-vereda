@@ -21,7 +21,7 @@ export default function Privacidade() {
       <p>Somente para entrar em contato e organizar o seu agendamento, com base no seu consentimento. Não vendemos nem cedemos seus dados para fins de publicidade de terceiros.</p>
 
       <h2>Com quem compartilhamos</h2>
-      <p>Com os prestadores de tecnologia necessários para receber o formulário e nos comunicarmos com você: [listar — hospedagem, ferramenta de formulários/e-mail, WhatsApp].</p>
+      <p>Com os prestadores de tecnologia necessários para receber o formulário e nos comunicarmos com você: [listar — hospedagem, ferramenta de formulários/e-mail, WhatsApp]. A página inicial também exibe um mapa do Google Maps, que pode registrar dados de navegação conforme a política do Google.</p>
 
       <h2>Por quanto tempo guardamos</h2>
       <p>Pedidos de agendamento que não resultarem em atendimento são excluídos em até [prazo]. Dados de pacientes atendidos seguem os prazos legais de guarda de prontuário.</p>
