@@ -47,7 +47,7 @@ main h2::after { content: ""; display: block; width: 3rem; height: 4px; margin-t
 
 .wrap { width: min(100% - 2.5rem, 77.5rem); margin-inline: auto; }
 .estreito { max-width: 46rem; }
-section { position: relative; padding-block: clamp(3.75rem, 8vw, 6.5rem); scroll-margin-top: 7rem; }
+section { position: relative; padding-block: clamp(3.75rem, 8vw, 6.5rem); scroll-margin-top: 5.5rem; }
 .faixa { background: var(--tint); }
 .areia { background: var(--areia); }
 .lead { font-size: 1.15rem; color: var(--muted); max-width: 40rem; }
@@ -91,16 +91,17 @@ section { position: relative; padding-block: clamp(3.75rem, 8vw, 6.5rem); scroll
 .topo { position: sticky; top: 0; z-index: 10; background: rgb(255 255 255 / 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .topo-in { display: flex; align-items: center; gap: 0 1.5rem; min-height: 4.25rem; }
 .marca { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; color: var(--ink); text-decoration: none; margin-right: auto; }
-.topo nav { display: flex; gap: 1.5rem; }
-.topo nav a { color: var(--ink); text-decoration: underline transparent 2px; text-underline-offset: 6px; font-weight: 500; transition: text-decoration-color var(--t), color var(--t); }
-.topo nav a:hover { color: var(--brand); text-decoration-color: var(--quente); }
+.nav-topo { display: flex; gap: 1.5rem; }
+.nav-topo a { color: var(--ink); text-decoration: underline transparent 2px; text-underline-offset: 6px; font-weight: 500; transition: text-decoration-color var(--t), color var(--t); }
+.nav-topo a:hover { color: var(--brand); text-decoration-color: var(--quente); }
 
 /* Hero */
 .hero { padding-top: clamp(2.5rem, 5vw, 4.5rem); overflow: hidden; background: radial-gradient(52rem 30rem at 92% 0%, var(--tint), transparent 62%), radial-gradient(34rem 26rem at 0% 100%, var(--quente-claro), transparent 66%); }
 .hero-in, .duas { display: grid; gap: var(--gap); align-items: center; }
-.hero-in { position: relative; }
+.hero-in { position: relative; z-index: 1; } /* conteúdo sempre acima da trilha decorativa */
 .hero .lead { margin-top: 1.25rem; }
-.trilha-hero { width: min(46rem, 90vw); left: 28%; bottom: 1rem; }
+/* Trilha achatada na faixa vazia da base do hero: fica abaixo de todo o conteúdo, sem cruzar texto */
+.trilha-hero { left: 0; bottom: 0.5rem; width: 100%; height: 2.75rem; }
 .fatos { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.5rem; }
 .fatos li { display: flex; align-items: center; gap: 0.55rem; font-weight: 600; }
 .fatos svg { box-sizing: content-box; padding: 0.25rem; flex: none; border-radius: 50%; background: var(--verde); color: var(--whats); }
@@ -133,9 +134,14 @@ section { position: relative; padding-block: clamp(3.75rem, 8vw, 6.5rem); scroll
 .difs p { color: var(--muted); }
 
 /* Serviços */
-.servicos { margin-top: 2.25rem; align-items: start; }
-.servicos p { color: var(--muted); }
-.servicos .ac { margin-top: 1rem; border-top: 1px solid var(--line); }
+/* Cards com a mesma altura e "Ver detalhes" alinhado na base */
+.servicos { margin-top: 2.25rem; align-items: stretch; }
+.servicos .cartao { display: flex; flex-direction: column; align-items: flex-start; }
+.servicos p { color: var(--muted); margin-bottom: 1rem; }
+.servicos .ac { align-self: stretch; margin-top: auto; border-top: 1px solid var(--line); }
+/* Em 2 colunas, o card vizinho (mesma linha) de um card aberto não estica junto com ele */
+.servicos .cartao:nth-child(odd):has(.ac[data-aberto]) + .cartao,
+.servicos .cartao:nth-child(odd):has(+ .cartao .ac[data-aberto]) { align-self: start; }
 .servicos .ac-botao { padding-block: 0.85rem 0; color: var(--brand); }
 .servicos .lista { padding-top: 0.85rem; font-size: 1rem; }
 .infantil { margin-top: clamp(3rem, 6vw, 4.5rem); }
@@ -156,7 +162,7 @@ section { position: relative; padding-block: clamp(3.75rem, 8vw, 6.5rem); scroll
 /* Equipe */
 .equipe { margin-top: 2.25rem; }
 .pessoa { padding: 0; overflow: hidden; }
-.pessoa .foto { border-radius: 0; }
+.pessoa .foto { border-radius: 0; object-fit: cover; object-position: center 25%; }
 .pessoa > div { padding: 1.25rem 1.35rem 1.5rem; }
 .badge { display: inline-block; margin-top: 0.6rem; padding: 0.2rem 0.7rem; border-radius: 999px; background: var(--quente-claro); color: var(--quente-escuro); font-weight: 600; font-size: 0.92rem; }
 .cro { margin-top: 0.5rem; font-weight: 600; font-size: 0.95rem; }
@@ -256,16 +262,35 @@ address { font-style: normal; }
 .privacidade h2::after { display: none; }
 .aviso { background: #fff6dc; border: 1px solid #e2c56a; border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 0.95rem; margin-bottom: 1.5rem; }
 
+/* Menu do celular (<dialog>) */
+.menu-botao { display: none; place-items: center; width: 2.75rem; height: 2.75rem; flex: none; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); cursor: pointer; transition: border-color var(--t), color var(--t); }
+.menu-botao:hover { border-color: var(--brand); color: var(--brand); }
+.menu-painel { width: min(20rem, 86vw); max-width: none; height: 100dvh; max-height: none; margin: 0 0 0 auto; padding: 0; border: 0; background: var(--surface); color: var(--ink); }
+.menu-painel[open] { animation: entra 0.2s ease; }
+.menu-painel::backdrop { background: rgb(9 30 58 / 0.55); }
+.menu-dentro { display: flex; flex-direction: column; min-height: 100%; padding: 1rem 1.25rem 1.5rem; }
+.menu-fechar { display: grid; align-self: flex-end; }
+.menu-dentro nav { display: grid; margin-top: 0.5rem; }
+.menu-dentro nav a { padding: 0.95rem 0; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 1.1rem; font-weight: 600; text-decoration: none; }
+.menu-dentro nav a:hover { color: var(--brand); }
+.menu-dentro .btn { margin-top: 1.5rem; }
+html:has(.menu-painel[open]) { overflow: hidden; } /* trava a rolagem da página com o menu aberto */
+@keyframes entra { from { transform: translateX(100%); } }
+
 /* WhatsApp: barra fixa no celular, botão flutuante em telas maiores */
 .barra-celular { position: fixed; inset: auto 0 0 0; z-index: 10; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; padding: 0.6rem 0.75rem calc(0.6rem + env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line); }
 .fab { position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10; display: none; place-items: center; width: 3.75rem; height: 3.75rem; border-radius: 50%; background: var(--whats); color: #fff; box-shadow: 0 10px 24px -8px rgb(14 122 65 / 0.7); transition: transform var(--t), background-color var(--t); }
 .fab:hover { transform: translateY(-3px) scale(1.04); background: #0a5f32; color: #fff; }
 
+/* Menu hambúrguer até 1024px: abaixo disso os 6 links, o logo e o botão não cabem na mesma linha */
+@media (max-width: 63.99rem) {
+  .nav-topo { display: none; }
+  .topo-in { gap: 0.75rem; }
+  .topo-in > .menu-botao { display: grid; }
+}
+
 @media (max-width: 47.99rem) {
-  .topo .btn { display: none; } /* a barra fixa já traz o CTA */
-  .topo-in { flex-wrap: wrap; padding-top: 0.7rem; }
-  .topo nav { order: 3; width: 100%; overflow-x: auto; scrollbar-width: none; gap: 1.25rem; white-space: nowrap; }
-  .topo nav a { padding-block: 0.7rem; }
+  .topo-in > .btn { display: none; } /* a barra fixa já traz o CTA */
   .acoes .btn { flex: 1 1 100%; }
   .selo { left: 0.75rem; bottom: 1.25rem; }
   .hero-foto .foto { border-radius: 1.5rem 1.5rem 1.5rem 4.5rem; }
@@ -273,11 +298,13 @@ address { font-style: normal; }
 }
 
 @media (max-width: 39.99rem) {
-  /* retratos menos altos quando ocupam a largura toda */
-  .pessoa .foto { aspect-ratio: 1 !important; object-position: center 25%; }
+  /* Equipe em carrossel: um card por vez, com a borda do próximo aparecendo como pista */
+  .equipe { grid-auto-flow: column; grid-auto-columns: 80%; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -1.25rem; padding: 0.25rem 1.25rem 1rem; scroll-padding-inline: 1.25rem; }
+  .equipe > li { scroll-snap-align: start; animation: none; }
 }
 
 @media (min-width: 40rem) {
+  .servicos .cartao > p { min-height: 3.2em; } /* reserva 2 linhas: os cards têm a mesma altura natural e não pulam quando o vizinho abre */
   .grade-2, .grade-4 { grid-template-columns: 1fr 1fr; }
   .rodape-cols { grid-template-columns: 1fr 1fr; }
 }
@@ -309,5 +336,6 @@ address { font-style: normal; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
+  .menu-painel[open] { animation: none; }
   .btn:hover, .btn:active, .cartao-hover:hover, .fab:hover { transform: none; }
 }

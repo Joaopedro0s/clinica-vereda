@@ -46,6 +46,7 @@ app/
   page.js                a landing page inteira, seção por seção
   AgendamentoForm.js     formulário (componente de cliente)
   Acordeao.js            item expansível acessível (serviços e FAQ)
+  MenuCelular.js         menu hambúrguer do celular
   icon.svg               ícone da aba (o símbolo da marca)
   globals.css            todos os estilos
   api/agendamento/       rota que recebe o formulário
@@ -69,7 +70,7 @@ Não há biblioteca de UI nem de CSS: só Next.js, React, CSS puro e os ícones 
 
 **Fotos.** Salve cada foto em `public/fotos` nos três tamanhos, seguindo o padrão `photo-<id>-500.webp`, `photo-<id>-960.webp` e `photo-<id>.webp`, e troque o `id` no componente `<Foto>` em `app/page.js`. Os retratos da equipe (proporção 4:5) usam só `photo-<id>-500.webp` e `photo-<id>.webp` (960 px), e o `id` de cada um fica no campo `foto` de `lib/site.mjs`. Ao trocar todas, remova a linha de créditos do rodapé.
 
-**Mapa.** `mapaEmbedUrl` em `lib/site.mjs` guarda o endereço do mapa incorporado do Google Maps (sem chave de API). Troque o texto depois de `q=` pelo endereço real.
+**Mapa.** `mapaEmbedUrl` em `lib/site.mjs` guarda o endereço do mapa incorporado do Google Maps (sem chave de API). Como o endereço é fictício, hoje ele usa coordenadas de um ponto na região; numa clínica real, troque o valor de `q=` pelo endereço completo.
 
 ## Formulário de agendamento
 
@@ -112,6 +113,6 @@ Fotos do Wikimedia Commons, redimensionadas:
 Fotos do Unsplash (licença Unsplash), recortadas:
 
 - Sala e consultório: [@karibjorn](https://unsplash.com/photos/Fdku_oMrDvk), [@karibjorn](https://unsplash.com/photos/yJsMOVwazRU)
-- Retratos da equipe: [@beatrizmendez](https://unsplash.com/photos/_4xStiTXY1o), [@laurentyasiel](https://unsplash.com/photos/607-cXjrge4), [@novantino](https://unsplash.com/photos/ieofhSUlRAA), [@othmanelmarzak](https://unsplash.com/photos/P4VXFXKyOQM)
+- Retratos da equipe: [@beatrizmendez](https://unsplash.com/photos/_4xStiTXY1o), [@laurentyasiel](https://unsplash.com/photos/607-cXjrge4), [@ikemotret20](https://unsplash.com/photos/1KK4zX7g5XE), [@othmanelmarzak](https://unsplash.com/photos/P4VXFXKyOQM)
 
 As pessoas retratadas são modelos de banco de imagens e não têm relação com os profissionais fictícios da página.

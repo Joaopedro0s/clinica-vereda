@@ -6,6 +6,7 @@ import {
 import { site, whatsappLink } from "../lib/site.mjs";
 import AgendamentoForm from "./AgendamentoForm";
 import Acordeao from "./Acordeao";
+import MenuCelular from "./MenuCelular";
 
 // Fotos de licença livre, já em WebP em public/fotos. Créditos no rodapé.
 // Para usar fotos próprias: salve com o mesmo padrão de nome e troque o id.
@@ -16,7 +17,7 @@ const creditos = [
   ["@karibjorn (Unsplash)", "https://unsplash.com/photos/yJsMOVwazRU"],
   ["@beatrizmendez (Unsplash)", "https://unsplash.com/photos/_4xStiTXY1o"],
   ["@laurentyasiel (Unsplash)", "https://unsplash.com/photos/607-cXjrge4"],
-  ["@novantino (Unsplash)", "https://unsplash.com/photos/ieofhSUlRAA"],
+  ["@ikemotret20 (Unsplash)", "https://unsplash.com/photos/1KK4zX7g5XE"],
   ["@othmanelmarzak (Unsplash)", "https://unsplash.com/photos/P4VXFXKyOQM"],
 ];
 
@@ -50,9 +51,10 @@ const Logo = ({ className = "" }) => (
 );
 
 // O mesmo traço curvo do logo, usado como detalhe decorativo de fundo.
-const Trilha = ({ className = "" }) => (
-  <svg className={`trilha ${className}`} viewBox="0 0 600 200" aria-hidden="true">
-    <path d="M4 170C120 170 150 50 290 66s170 110 306 20" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="1 13" strokeLinecap="round" />
+// `vectorEffect` mantém os pontos redondos mesmo quando o SVG é esticado (como no hero).
+const Trilha = ({ className = "", ...props }) => (
+  <svg className={`trilha ${className}`} viewBox="0 0 600 200" aria-hidden="true" {...props}>
+    <path d="M4 170C120 170 150 50 290 66s170 110 306 20" fill="none" stroke="currentColor" strokeWidth="3" strokeDasharray="1 13" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
   </svg>
 );
 
@@ -183,16 +185,17 @@ export default function Pagina() {
             <Logo />
             {site.nome}
           </a>
-          <nav aria-label="Seções da página">
+          <nav className="nav-topo" aria-label="Seções da página">
             {secoes.map(([href, nome]) => <a key={href} href={href}>{nome}</a>)}
           </nav>
           <a className="btn btn-pri btn-p" href="#agendamento">Agendar consulta</a>
+          <MenuCelular links={secoes} />
         </div>
       </header>
 
       <main id="conteudo">
         <section id="inicio" className="hero">
-          <Trilha className="trilha-hero" />
+          <Trilha className="trilha-hero" preserveAspectRatio="none" />
           <div className="wrap hero-in">
             <div>
               <p className="sobre-titulo">Clínica odontológica no {end.bairro}, {site.cidade}/{site.uf}</p>
@@ -251,7 +254,7 @@ export default function Pagina() {
           <div className="wrap">
             <h2>Serviços e tratamentos</h2>
             <p className="lead">O que fazemos, em linguagem simples. A indicação de cada tratamento é sempre definida depois de uma avaliação.</p>
-            <div className="grade grade-4 servicos">
+            <div className="grade grade-2 servicos">
               {tratamentos.map((t) => (
                 <article className="cartao cartao-hover revela" key={t.titulo}>
                   <Ic i={t.icone} className="ic-azul" />
@@ -295,7 +298,7 @@ export default function Pagina() {
           <div className="wrap">
             <h2>Nossa equipe</h2>
             <p className="lead">Quatro dentistas, cada um na sua especialidade, trabalhando juntos no seu plano de tratamento.</p>
-            <ul className="grade grade-4 equipe">
+            <ul className="grade grade-4 equipe" tabIndex={0} aria-label="Dentistas da equipe">
               {site.equipe.map((p) => (
                 <li className="cartao cartao-hover pessoa revela" key={p.nome}>
                   <Foto
@@ -333,7 +336,7 @@ export default function Pagina() {
               <h2>O que dizem os pacientes</h2>
               <p className="media">
                 <Star size={18} fill="currentColor" aria-hidden="true" />
-                <strong>{media} de média</strong> · {site.depoimentos.length} avaliações
+                <strong>{media} de média</strong>
               </p>
             </div>
             <div className="depos">
